@@ -1,0 +1,39 @@
+{
+  "name": "livraria-liberta-api",
+  "version": "1.0.0",
+  "description": "Back-end da livraria Liberta, feita com NodeJS e Express.",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "dev": "nodemon",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willy-r/livraria-liberta-api.git"
+  },
+  "keywords": [
+    "livraria",
+    "rest-api",
+    "express"
+  ],
+  "author": "William Rodrigues",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/willy-r/livraria-liberta-api/issues"
+  },
+  "homepage": "https://github.com/willy-r/livraria-liberta-api#readme",
+  "dependencies": {
+    "consign": "^0.1.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.15"
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}
