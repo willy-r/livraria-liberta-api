@@ -36,6 +36,23 @@ class LivroDAO {
       });
     });
   }
+
+  static deletaLivro(idLivro) {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        DELETE FROM livro
+        WHERE id_livro = ?;
+      `;
+
+      dbConexao.query(sql, idLivro, (err, results) => {
+        if (err) {
+          return reject(new InternalServerError(`ERRO: ${err.message}`));
+        }
+
+        resolve(results.affectedRows);
+      });
+    });
+  }
 }
 
 module.exports = LivroDAO;
