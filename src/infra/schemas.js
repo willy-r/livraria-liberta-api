@@ -6,7 +6,7 @@ const criaTabelaLivro = `
     descricao TEXT NOT NULL,
     categoria VARCHAR(255) NOT NULL,
     url_img VARCHAR(255) NOT NULL,
-    preco NUMERIC(10, 2) NOT NULL,
+    preco FLOAT(10, 2) NOT NULL,
     paginas INT NOT NULL,
     ano_publicacao YEAR NOT NULL,
     editora VARCHAR(255) NOT NULL,
