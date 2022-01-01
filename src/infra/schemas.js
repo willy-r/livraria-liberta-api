@@ -9,8 +9,8 @@ const criaTabelaLivro = `
     preco NUMERIC(10, 2) NOT NULL,
     paginas INT NOT NULL,
     ano_publicacao YEAR NOT NULL,
-    editora VARCHAR(255),
-    autor VARCHAR(255)
+    editora VARCHAR(255) NOT NULL,
+    autor VARCHAR(255) NOT NULL
   );
 `;
 
