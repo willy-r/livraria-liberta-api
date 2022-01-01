@@ -47,7 +47,7 @@ const LivroController = (app) => {
       
       res.status(200).json({
         erro: false,
-        msg: `Livro '${livro.titulo.length > 25 ? livro.titulo.slice(0, 25) + ' ...' : livro.titulo}' deletado.`,
+        msg: `Livro '${livro.titulo.length > 25 ? livro.titulo.slice(0, 25) + '...' : livro.titulo}' deletado.`,
       });
     } catch (err) {
       res.status(err.codStatus).json({
