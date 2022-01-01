@@ -59,6 +59,7 @@ Para mais informações sobre cada roda em particular de cada entidade, por favo
 | ------ | ---- | --------- |
 | **GET** | `/api/livro/todos` | Lista todos os livros |
 | **GET** | `/api/livro/{id}` | Busca o livro pelo {id} |
+| **POST** | `/api/livro` | Adiciona novo livro |
 | **DELETE** | `/api/livro/{id}` | Deleta o livro pelo {id} |
 
 
