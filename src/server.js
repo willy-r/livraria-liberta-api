@@ -1,16 +1,16 @@
 require('dotenv').config();
 
 const customApp = require('./config/customApp');
-const db = require('./infra/db');
+const dbConexao = require('./infra/dbConexao');
 const Tabelas = require('./infra/Tabelas');
 
-db.connect(err => {
+dbConexao.connect(err => {
   if (err) {
     return console.log('ERRO:', err.message);
   }
 
-  // Banco de dados, cria as tabelas.
-  Tabelas.criaTabelas(db);
+  // Cria as tabelas.
+  Tabelas.criaTabelas();
 
   // Cria o app e inicia o servidor.
   const app = customApp();

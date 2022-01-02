@@ -1,9 +1,10 @@
+const dbConexao = require('./dbConexao');
 const schemas = require('./schemas');
 
 class Tabelas {
-  static criaTabelas(db) {
+  static criaTabelas() {
     for (const key in schemas) {
-      db.query(schemas[key], err => {
+      dbConexao.query(schemas[key], err => {
         if (err) {
           console.log('ERRO:', err.message);
         }
