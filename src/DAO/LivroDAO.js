@@ -84,12 +84,12 @@ class LivroDAO {
         WHERE id_livro = ?;
       `;
 
-      dbConexao.query(sql, [livro, idLivro], (err) => {
+      dbConexao.query(sql, [livro, idLivro], (err, results) => {
         if (err) {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
 
-        resolve(idLivro);
+        resolve(results.changedRows);
       });
     });
   }

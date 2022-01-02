@@ -76,7 +76,6 @@ const LivroController = (app) => {
 
       res.status(200).json({
         erro: false,
-        camposAtualizados: camposLivro,
         idLivro: idLivro,
       });
     } catch (err) {
@@ -91,13 +90,13 @@ const LivroController = (app) => {
     const idLivro = parseInt(req.params.id);
 
     try {
-      const livro = await Livro.verificaLivroExiste(idLivro);
+      await Livro.verificaLivroExiste(idLivro);
       
       await LivroDAO.deletaLivro(idLivro);
       
       res.status(200).json({
         erro: false,
-        msg: `Livro '${livro.titulo.length > 25 ? livro.titulo.slice(0, 25) + '...' : livro.titulo}' deletado.`,
+        idLivro: idLivro,
       });
     } catch (err) {
       res.status(err.codStatus).json({
