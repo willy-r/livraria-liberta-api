@@ -4,7 +4,7 @@ const { InternalServerError } = require('../erros/erros');
 class LivroDAO {
   static buscaLivros(params) {
     return new Promise((resolve, reject) => {
-      let sql = `SELECT * FROM livro`;
+      let sql = 'SELECT * FROM livro';
 
       if (Object.entries(params).length === 1) {
         // Tem parâmetros, verifica se são parâmetros válidos.

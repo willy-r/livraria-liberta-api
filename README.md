@@ -63,6 +63,16 @@ Para mais informações sobre cada roda em particular de cada entidade, por favo
 | **PATCH** | `/api/livro/{id}` | Atualiza livro pelo {id} |
 | **DELETE** | `/api/livro/{id}` | Deleta o livro pelo {id} |
 
+### Rotas (Entidade Usuário)
+
+| Método | Rota | Descrição |
+| ------ | ---- | --------- |
+| **GET** | `/api/usuario/todos` | Lista todos os usuários |
+| **GET** | `/api/livro/{id}` | Busca o livro pelo {id} |
+| **POST** | `/api/livro` | Adiciona novo livro |
+| **PATCH** | `/api/livro/{id}` | Atualiza livro pelo {id} |
+| **DELETE** | `/api/livro/{id}` | Deleta o livro pelo {id} |
+
 
 ## Informações gerais
 
