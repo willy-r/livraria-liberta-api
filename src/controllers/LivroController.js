@@ -2,9 +2,11 @@ const LivroDAO = require('../DAO/LivroDAO');
 const Livro = require('../models/Livro');
 
 const LivroController = (app) => {
-  app.get('/api/livro/todos', async (_, res) => {
+  app.get('/api/livro/todos', async (req, res) => {
+    const params = { ...req.query };
+    
     try {
-      const livros = await LivroDAO.buscaLivros();
+      const livros = await LivroDAO.buscaLivros(params);
       
       res.status(200).json({
         erro: false,
