@@ -67,6 +67,24 @@ class LivroDAO {
     });
   } 
 
+  static atualizaLivro(livro, idLivro) {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        UPDATE livro
+        SET ?
+        WHERE id_livro = ?;
+      `;
+
+      dbConexao.query(sql, [livro, idLivro], (err) => {
+        if (err) {
+          return reject(new InternalServerError(`ERRO: ${err.message}`));
+        }
+
+        resolve(idLivro);
+      });
+    });
+  }
+
   static deletaLivro(idLivro) {
     return new Promise((resolve, reject) => {
       const sql = `

@@ -2,16 +2,39 @@ const LivroDAO = require('../DAO/LivroDAO');
 const { InvalidArgumentError, EntityNotFoundError } = require('../erros/erros');
 
 class Livro {
-  static async verificaId(idLivro) {
-    if (await LivroDAO.buscaLivroPeloId(idLivro) === undefined) {
+  static async verificaLivroExiste(idLivro) {
+    const livro = await LivroDAO.buscaLivroPeloId(idLivro);
+
+    if (!livro) {
       throw new EntityNotFoundError(`ERRO: livro com ID ${idLivro} não encontrado.`);
+    }
+
+    return livro;
+  }
+  
+  static async verificaISBNExiste(ISBN) {
+    const livro = await LivroDAO.buscaLivroPeloISBN(ISBN);
+
+    if (livro && ISBN !== livro.ISBN) {
+      throw new InvalidArgumentError(`O livro com o ISBN ${ISBN} já existe.`);
     }
   }
   
-  static async verificaISBN(ISBN) {
-    if (await LivroDAO.buscaLivroPeloISBN(ISBN) !== undefined) {
-      throw new InvalidArgumentError(`O livro com o ISBN ${ISBN} já existe.`);
-    }
+  static livroParaAtualizar(camposLivro, livroAntigo) {
+    const camposParaAtualizar = {
+      ISBN: camposLivro.ISBN || livroAntigo.ISBN,
+      titulo: camposLivro.titulo || livroAntigo.titulo,
+      descricao: camposLivro.descricao || livroAntigo.descricao,
+      categoria: camposLivro.categoria || livroAntigo.categoria,
+      url_img: camposLivro.url_img || livroAntigo.url_img,
+      preco: camposLivro.preco || livroAntigo.preco,
+      paginas: camposLivro.paginas || livroAntigo.paginas,
+      ano_publicacao: camposLivro.ano_publicacao || livroAntigo.ano_publicacao,
+      editora: camposLivro.editora || livroAntigo.editora,
+      autor: camposLivro.autor || livroAntigo.autor,
+    };
+  
+    return new Livro(camposParaAtualizar).livroVerificado;
   }
   
   constructor(livro) {

@@ -60,6 +60,7 @@ Para mais informações sobre cada roda em particular de cada entidade, por favo
 | **GET** | `/api/livro/todos` | Lista todos os livros |
 | **GET** | `/api/livro/{id}` | Busca o livro pelo {id} |
 | **POST** | `/api/livro` | Adiciona novo livro |
+| **PATCH** | `/api/livro/{id}` | Atualiza livro pelo {id} |
 | **DELETE** | `/api/livro/{id}` | Deleta o livro pelo {id} |
 
 
@@ -78,7 +79,7 @@ Essas são algumas das bibliotecas e frameworks utilizadas no projeto.
 
 **Banco de Dados:**
 
-- [MySQL](#TODO)
+- [mysql](https://www.npmjs.com/package/mysql)
 
 
 ## Autor

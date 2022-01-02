@@ -23,10 +23,7 @@ const LivroController = (app) => {
     const idLivro = parseInt(req.params.id);
 
     try {
-      // Verifica se o livro existe, se não existir um erro é gerado.
-      await Livro.verificaId(idLivro);
-      
-      const livro = await LivroDAO.buscaLivroPeloId(idLivro);
+      const livro = await Livro.verificaLivroExiste(idLivro);
 
       res.status(200).json({
         erro: false,
@@ -41,16 +38,15 @@ const LivroController = (app) => {
   });
 
   app.post('/api/livro', async (req, res) => {
-    const livroReq = { ...req.body };
+    const camposLivro = { ...req.body };
 
     try {
-      const livro = new Livro(livroReq).livroVerificado;
+      const livro = new Livro(camposLivro).livroVerificado;
       
-      // Verifica se ISBN já existe, se existir um erro é gerado.
-      await Livro.verificaISBN(livro.ISBN);
+      await Livro.verificaISBNExiste(livro.ISBN);
 
-      const livroCriadoId = await LivroDAO.adicionaLivro(livro);
-      const livroCriado = await LivroDAO.buscaLivroPeloId(livroCriadoId);
+      const idLivroCriado = await LivroDAO.adicionaLivro(livro);
+      const livroCriado = await LivroDAO.buscaLivroPeloId(idLivroCriado);
 
       res.status(201).json({
         erro: false,
@@ -64,13 +60,37 @@ const LivroController = (app) => {
     }
   });
 
+  app.patch('/api/livro/:id', async (req, res) => {
+    const camposLivro = { ...req.body };
+    const idLivro = parseInt(req.params.id);
+
+    try { 
+      const livroAntigo = await Livro.verificaLivroExiste(idLivro);
+      const livro = Livro.livroParaAtualizar(camposLivro, livroAntigo);
+      
+      await Livro.verificaISBNExiste(livro.ISBN);
+
+      await LivroDAO.atualizaLivro(livro, idLivro);
+
+      res.status(200).json({
+        erro: false,
+        camposAtualizados: camposLivro,
+        idLivro: idLivro,
+      });
+    } catch (err) {
+      res.status(err.codStatus).json({
+        erro: true,
+        msg: err.message,
+      });
+    }
+  });
+
   app.delete('/api/livro/:id', async (req, res) => {
     const idLivro = parseInt(req.params.id);
 
     try {
-      // Verifica se o livro existe.
-      const livro = await LivroDAO.buscaLivroPeloId(idLivro);
-      // Deleta o livro se existir.
+      const livro = await Livro.verificaLivroExiste(idLivro);
+      
       await LivroDAO.deletaLivro(idLivro);
       
       res.status(200).json({
