@@ -1,21 +1,12 @@
 const dbConexao = require('../infra/dbConexao');
 const { InternalServerError } = require('../erros/erros');
 
-class LivroDAO {
-  static buscaLivros(params) {
+class UsuarioDAO {
+  static buscaUsuarios() {
     return new Promise((resolve, reject) => {
-      let sql = 'SELECT * FROM livro';
+      const sql = 'SELECT * FROM usuario';
 
-      if (Object.entries(params).length === 1) {
-        // Tem parâmetros, verifica se são parâmetros válidos.
-        const paramsValidos = ['categoria', 'autor'];
-
-        if (paramsValidos.includes(Object.keys(params)[0])) {
-          sql += ' WHERE ?;';
-        }
-      }
-
-      dbConexao.query(sql, params, (err, results) => {
+      dbConexao.query(sql, (err, results) => {
         if (err) {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
@@ -25,14 +16,14 @@ class LivroDAO {
     });
   }
 
-  static buscaLivroPeloId(idLivro) {
+  static buscaUsuarioPeloId(idUsuario) {
     return new Promise((resolve, reject) => {
       const sql = `
-        SELECT * FROM livro
-        WHERE id_livro = ?;
+        SELECT * FROM usuario
+        WHERE id_usuario = ?;
       `;
 
-      dbConexao.query(sql, idLivro, (err, results) => {
+      dbConexao.query(sql, idUsuario, (err, results) => {
         if (err) {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
@@ -42,14 +33,14 @@ class LivroDAO {
     });
   }
 
-  static buscaLivroPeloISBN(ISBN) {
+  static buscaUsuarioPeloEmail(email) {
     return new Promise((resolve, reject) => {
       const sql = `
-        SELECT * FROM livro
-        WHERE ISBN = ?;
+        SELECT * FROM usuario
+        WHERE email = ?;
       `;
 
-      dbConexao.query(sql, ISBN, (err, results) => {
+      dbConexao.query(sql, email, (err, results) => {
         if (err) {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
@@ -59,15 +50,32 @@ class LivroDAO {
     });
   }
 
-  static adicionaLivro(livro) {
+  static buscaUsuarioPeloCPF(CPF) {
     return new Promise((resolve, reject) => {
       const sql = `
-        INSERT INTO livro
-          (ISBN, titulo, descricao, categoria, url_img, preco, paginas, ano_publicacao, editora, autor)
+        SELECT * FROM usuario
+        WHERE CPF = ?;
+      `;
+
+      dbConexao.query(sql, CPF, (err, results) => {
+        if (err) {
+          return reject(new InternalServerError(`ERRO: ${err.message}`));
+        }
+
+        resolve(results[0]);
+      });
+    });
+  }
+
+  static adicionaUsuario(usuario) {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        INSERT INTO usuario
+          (CPF, nome, email, senha, endereco, url_img)
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?);
       `;
-      const params = Object.values(livro);
+      const params = Object.values(usuario);
 
       dbConexao.query(sql, params, (err, results) => {
         if (err) {
@@ -77,26 +85,22 @@ class LivroDAO {
         resolve(results.insertId);
       });
     });
-  } 
+  }
 
-  static atualizaLivro(livro, idLivro) {
+  static atualizaUsuario(usuario, idUsuario) {
     return new Promise((resolve, reject) => {
       const sql = `
-        UPDATE livro
+        UPDATE usuario
         SET
-          ISBN = ?,
-          titulo = ?,
-          descricao = ?,
-          categoria = ?,
-          url_img = ?,
-          preco = ?,
-          paginas = ?,
-          ano_publicacao = ?,
-          editora = ?,
-          autor = ?
-        WHERE id_livro = ?;
+          CPF = ?,
+          nome = ?,
+          email = ?,
+          senha = ?,
+          endereco = ?,
+          url_img = ?
+        WHERE id_usuario = ?;
       `;
-      const params = [...Object.values(livro), idLivro];
+      const params = [...Object.values(usuario), idUsuario];
 
       dbConexao.query(sql, params, (err, results) => {
         if (err) {
@@ -108,14 +112,14 @@ class LivroDAO {
     });
   }
 
-  static deletaLivro(idLivro) {
+  static deletaUsuario(idUsuario) {
     return new Promise((resolve, reject) => {
       const sql = `
-        DELETE FROM livro
-        WHERE id_livro = ?;
+        DELETE FROM usuario
+        WHERE id_usuario = ?;
       `;
 
-      dbConexao.query(sql, idLivro, (err, results) => {
+      dbConexao.query(sql, idUsuario, (err, results) => {
         if (err) {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
@@ -126,4 +130,4 @@ class LivroDAO {
   }
 }
 
-module.exports = LivroDAO;
+module.exports = UsuarioDAO;

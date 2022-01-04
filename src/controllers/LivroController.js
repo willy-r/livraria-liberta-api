@@ -1,5 +1,6 @@
 const LivroDAO = require('../DAO/LivroDAO');
 const Livro = require('../models/Livro');
+const { InvalidArgumentError } = require('../erros/erros');
 
 const LivroController = (app) => {
   app.get('/api/livro/todos', async (req, res) => {
@@ -43,16 +44,17 @@ const LivroController = (app) => {
     const camposLivro = { ...req.body };
 
     try {
-      const livro = new Livro(camposLivro).livroVerificado;
+      const livro = new Livro(camposLivro);
       
-      await Livro.verificaISBNExiste(livro.ISBN);
+      if (await LivroDAO.buscaLivroPeloISBN(livro.ISBN)) {
+        throw new InvalidArgumentError(`O livro com o ISBN ${livro.ISBN} já existe.`);
+      }
 
-      const idLivroCriado = await LivroDAO.adicionaLivro(livro);
-      const livroCriado = await LivroDAO.buscaLivroPeloId(idLivroCriado);
+      const idLivro = await LivroDAO.adicionaLivro(livro);
 
       res.status(201).json({
         erro: false,
-        livroCriado: livroCriado,
+        idLivro: idLivro,
       });
     } catch (err) {
       res.status(err.codStatus).json({
@@ -68,9 +70,11 @@ const LivroController = (app) => {
 
     try { 
       const livroAntigo = await Livro.verificaLivroExiste(idLivro);
-      const livro = Livro.livroParaAtualizar(camposLivro, livroAntigo);
+      const livro = Livro.livroParaAtualizar(livroAntigo, camposLivro);
       
-      await Livro.verificaISBNExiste(livro.ISBN);
+      if (await LivroDAO.buscaLivroPeloISBN(livro.ISBN) && livro.ISBN !== livroAntigo.ISBN) {
+        throw new InvalidArgumentError(`O livro com o ISBN ${livro.ISBN} já existe.`);
+      }
 
       await LivroDAO.atualizaLivro(livro, idLivro);
 
