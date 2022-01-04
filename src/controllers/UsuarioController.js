@@ -46,7 +46,7 @@ const UsuarioController = (app) => {
       if (await UsuarioDAO.buscaUsuarioPeloEmail(usuario.email)) {
         throw new InvalidArgumentError('Usuário com este endereço de email já existe!');
       }
-
+      
       if (await UsuarioDAO.buscaUsuarioPeloCPF(usuario.CPF)) {
         throw new InvalidArgumentError('Usuário com este CPF já existe!');
       }
@@ -56,6 +56,40 @@ const UsuarioController = (app) => {
       const idUsuario = await UsuarioDAO.adicionaUsuario(usuario);
 
       res.status(201).json({
+        erro: false,
+        idUsuario: idUsuario,
+      });
+    } catch (err) {
+      res.status(err.codStatus).json({
+        erro: true,
+        msg: err.message,
+      });
+    }
+  });
+
+  app.patch('/api/usuario/:id', async (req, res) => {
+    const idUsuario = parseInt(req.params.id);
+    const camposUsuario = { ...req.body };
+
+    try {
+      const usuarioAntigo = await Usuario.verificaUsuarioExiste(idUsuario);
+      const usuario = Usuario.usuarioParaAtualizar(usuarioAntigo, camposUsuario);
+
+      if (await UsuarioDAO.buscaUsuarioPeloEmail(usuario.email) && usuario.email !== usuarioAntigo.email) {
+        throw new InvalidArgumentError('Usuário com este endereço de email já existe!');
+      }
+
+      if (await UsuarioDAO.buscaUsuarioPeloCPF(usuario.CPF) && usuario.CPF !== usuarioAntigo.CPF) {
+        throw new InvalidArgumentError('Usuário com este CPF já existe!');
+      }
+
+      if (usuario.senha !== usuarioAntigo.senha) {
+        await usuario.adicionaSenhaCriptografada();
+      }
+      
+      await UsuarioDAO.atualizaUsuario(usuario, idUsuario);
+
+      res.status(200).json({
         erro: false,
         idUsuario: idUsuario,
       });

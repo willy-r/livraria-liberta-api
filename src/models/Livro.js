@@ -13,7 +13,7 @@ class Livro {
   }
 
   static livroParaAtualizar(livroAntigo, livroNovo) {
-    const livroParaAtualizar = {
+    return new Livro({
       ISBN: livroNovo.ISBN || livroAntigo.ISBN,
       titulo: livroNovo.titulo || livroAntigo.titulo,
       descricao: livroNovo.descricao || livroAntigo.descricao,
@@ -24,9 +24,7 @@ class Livro {
       ano_publicacao: livroNovo.ano_publicacao || livroAntigo.ano_publicacao,
       editora: livroNovo.editora || livroAntigo.editora,
       autor: livroNovo.autor || livroAntigo.autor,
-    };
-
-    return new Livro(livroParaAtualizar);
+    });
   }
   
   constructor(livro) {

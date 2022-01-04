@@ -14,6 +14,17 @@ class Usuario {
     return usuario;
   }
 
+  static usuarioParaAtualizar(usuarioAntigo, usuarioNovo) {
+    return new Usuario({
+      CPF: usuarioNovo.CPF || usuarioAntigo.CPF,
+      nome: usuarioNovo.nome || usuarioAntigo.nome,
+      email: usuarioNovo.email || usuarioAntigo.email,
+      senha: usuarioNovo.senha || usuarioAntigo.senha,
+      endereco: usuarioNovo.endereco || usuarioAntigo.endereco,
+      url_img: usuarioNovo.url_img || usuarioAntigo.url_img,
+    });
+  }
+
   static async criptografaSenha(senha) {
     const custoHash = 10;
     return bcrypt.hash(senha, custoHash);

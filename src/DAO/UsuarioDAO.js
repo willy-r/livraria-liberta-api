@@ -86,6 +86,31 @@ class UsuarioDAO {
       });
     });
   }
+
+  static atualizaUsuario(usuario, idUsuario) {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        UPDATE usuario
+        SET
+          CPF = ?,
+          nome = ?,
+          email = ?,
+          senha = ?,
+          endereco = ?,
+          url_img = ?
+        WHERE id_usuario = ?;
+      `;
+      const params = [...Object.values(usuario), idUsuario];
+
+      dbConexao.query(sql, params, (err, results) => {
+        if (err) {
+          return reject(new InternalServerError(`ERRO: ${err.message}`));
+        }
+
+        resolve(results.changedRows);
+      });
+    });
+  }
 }
 
 module.exports = UsuarioDAO;
