@@ -63,10 +63,13 @@ class LivroDAO {
     return new Promise((resolve, reject) => {
       const sql = `
         INSERT INTO livro
-        SET ?;
+          (ISBN, titulo, descricao, categoria, url_img, preco, paginas, ano_publicacao, editora, autor)
+        VALUES
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
+      const params = Object.values(livro);
 
-      dbConexao.query(sql, livro, (err, results) => {
+      dbConexao.query(sql, params, (err, results) => {
         if (err) {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
@@ -80,11 +83,22 @@ class LivroDAO {
     return new Promise((resolve, reject) => {
       const sql = `
         UPDATE livro
-        SET ?
+        SET
+          ISBN = ?,
+          titulo = ?,
+          descricao = ?,
+          categoria = ?,
+          url_img = ?,
+          preco = ?,
+          paginas = ?,
+          ano_publicacao = ?,
+          editora = ?,
+          autor = ?
         WHERE id_livro = ?;
       `;
+      const params = [...Object.values(livro), idLivro];
 
-      dbConexao.query(sql, [livro, idLivro], (err, results) => {
+      dbConexao.query(sql, params, (err, results) => {
         if (err) {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }

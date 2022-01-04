@@ -70,8 +70,10 @@ class UsuarioDAO {
   static adicionaUsuario(usuario) {
     return new Promise((resolve, reject) => {
       const sql = `
-        INSERT INTO usuario (CPF, nome, email, senha, endereco, url_img)
-        VALUES (?, ?, ?, ?, ?, ?);
+        INSERT INTO usuario
+          (CPF, nome, email, senha, endereco, url_img)
+        VALUES
+          (?, ?, ?, ?, ?, ?);
       `;
       const params = Object.values(usuario);
 
