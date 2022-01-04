@@ -103,7 +103,7 @@ class LivroDAO {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
 
-        resolve(results.changedRows);
+        resolve(results.affectedRows);
       });
     });
   }

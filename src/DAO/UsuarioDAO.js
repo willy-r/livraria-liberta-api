@@ -107,7 +107,24 @@ class UsuarioDAO {
           return reject(new InternalServerError(`ERRO: ${err.message}`));
         }
 
-        resolve(results.changedRows);
+        resolve(results.affectedRows);
+      });
+    });
+  }
+
+  static deletaUsuario(idUsuario) {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        DELETE FROM usuario
+        WHERE id_usuario = ?;
+      `;
+
+      dbConexao.query(sql, idUsuario, (err, results) => {
+        if (err) {
+          return reject(new InternalServerError(`ERRO: ${err.message}`));
+        }
+
+        resolve(results.affectedRows);
       });
     });
   }
