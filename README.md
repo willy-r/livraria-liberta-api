@@ -68,10 +68,10 @@ Para mais informações sobre cada roda em particular de cada entidade, por favo
 | Método | Rota | Descrição |
 | ------ | ---- | --------- |
 | **GET** | `/api/usuario/todos` | Lista todos os usuários |
-| **GET** | `/api/livro/{id}` | Busca o livro pelo {id} |
-| **POST** | `/api/livro` | Adiciona novo livro |
-| **PATCH** | `/api/livro/{id}` | Atualiza livro pelo {id} |
-| **DELETE** | `/api/livro/{id}` | Deleta o livro pelo {id} |
+| **GET** | `/api/usuario/{id}` | Busca o usuário pelo {id} |
+| **POST** | `/api/usuario` | Adiciona novo usuário |
+| **PATCH** | `/api/usuario/{id}` | Atualiza usuário pelo {id} |
+| **DELETE** | `/api/usuario/{id}` | Deleta o usuário pelo {id} |
 
 
 ## Informações gerais
@@ -85,7 +85,12 @@ Essas são algumas das bibliotecas e frameworks utilizadas no projeto.
 **Servidor:**
 
 - [NodeJS](https://nodejs.org/en/)
-- [Express](http://expressjs.com/)
+- [Express](http://expressjs.com/)]
+
+**Autenticação & Segurança:**
+
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
 
 **Banco de Dados:**
 
