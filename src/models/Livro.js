@@ -65,7 +65,7 @@ class Livro {
     }
 
     if (urlImg.length > 255) {
-      throw new InvalidArgumentError('img_url deve ter no máximo 255 caracteres.');
+      throw new InvalidArgumentError('img_url inválida, deve ter no máximo 255 caracteres.');
     }
 
     const regex = /^(http(s)?):\/\/[^ "]+$/;

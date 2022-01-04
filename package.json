@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/willy-r/livraria-liberta-api#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "consign": "^0.1.6",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
