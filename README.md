@@ -49,9 +49,9 @@ npm run dev
 > Isso irá criar o servidor, e as tabelas do banco de dados se a conexão com o mesmo for bem sucedida.
 
 
-## Rotas API Referência
+## Referência da API
 
-Para mais informações sobre cada roda em particular de cada entidade, por favor consulte a [wiki](#TODO) do projeto.
+Para mais informações sobre cada rota em particular de cada entidade, por favor consulte a [wiki](https://github.com/willy-r/livraria-liberta-api/wiki) do projeto.
 
 ### Rotas (Entidade Livro)
 
