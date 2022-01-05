@@ -19,6 +19,10 @@ As seguintes variáveis de ambiente precisam ser definidas para o funcionamento 
 - `DB_PASSWORD`
 - `DB_NAME`
 
+### Json Web Token
+
+- `JWT_KEY`
+
 
 ## Rodar localmente
 

@@ -23,7 +23,7 @@ const UsuarioController = (app) => {
     const idUsuario = parseInt(req.params.id);
 
     try {
-      const usuario = await Usuario.verificaUsuarioExiste(idUsuario);
+      const usuario = await Usuario.verificaUsuarioExistePeloId(idUsuario);
 
       res.status(200).json({
         erro: false,
@@ -72,7 +72,7 @@ const UsuarioController = (app) => {
     const camposUsuario = { ...req.body };
 
     try {
-      const usuarioAntigo = await Usuario.verificaUsuarioExiste(idUsuario);
+      const usuarioAntigo = await Usuario.verificaUsuarioExistePeloId(idUsuario);
       const usuario = Usuario.usuarioParaAtualizar(usuarioAntigo, camposUsuario);
 
       if (await UsuarioDAO.buscaUsuarioPeloEmail(usuario.email) && usuario.email !== usuarioAntigo.email) {
@@ -105,7 +105,7 @@ const UsuarioController = (app) => {
     const idUsuario = parseInt(req.params.id);
 
     try {
-      await Usuario.verificaUsuarioExiste(idUsuario);
+      await Usuario.verificaUsuarioExistePeloId(idUsuario);
 
       await UsuarioDAO.deletaUsuario(idUsuario);
 
