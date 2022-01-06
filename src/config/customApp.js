@@ -2,6 +2,9 @@ const express = require('express');
 const consign = require('consign');
 const cors = require('cors');
 
+// Inicializa as estratégias de autenticação.
+require('../middlewares/estrategiasAutenticacao');
+
 const customApp = () => {
   const app = express();
   const opcoesCors = {

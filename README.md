@@ -19,6 +19,10 @@ As seguintes variáveis de ambiente precisam ser definidas para o funcionamento 
 - `DB_PASSWORD`
 - `DB_NAME`
 
+### Json Web Token
+
+- `JWT_KEY`
+
 
 ## Rodar localmente
 
@@ -72,6 +76,12 @@ Para mais informações sobre cada rota em particular de cada entidade, por favo
 | **POST** | `/api/usuario` | Adiciona novo usuário |
 | **PATCH** | `/api/usuario/{id}` | Atualiza usuário pelo {id} |
 | **DELETE** | `/api/usuario/{id}` | Deleta o usuário pelo {id} |
+
+### Rotas (Autenticação)
+
+| Método | Rota | Descrição |
+| ------ | ---- | --------- |
+| **POST** | `/api/auth/login` | Faz login do usuário |
 
 
 ## Informações gerais

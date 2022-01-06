@@ -1,5 +1,6 @@
 const UsuarioDAO = require('../DAO/UsuarioDAO');
 const Usuario = require('../models/Usuario');
+const AutenticacaoMiddleware = require('../middlewares/AutenticacaoMiddleware');
 const { InvalidArgumentError } = require('../erros/erros');
 
 const UsuarioController = (app) => {
@@ -23,7 +24,7 @@ const UsuarioController = (app) => {
     const idUsuario = parseInt(req.params.id);
 
     try {
-      const usuario = await Usuario.verificaUsuarioExiste(idUsuario);
+      const usuario = await Usuario.verificaUsuarioExistePeloId(idUsuario);
 
       res.status(200).json({
         erro: false,
@@ -67,12 +68,12 @@ const UsuarioController = (app) => {
     }
   });
 
-  app.patch('/api/usuario/:id', async (req, res) => {
+  app.patch('/api/usuario/:id', AutenticacaoMiddleware.bearer, async (req, res) => {
     const idUsuario = parseInt(req.params.id);
     const camposUsuario = { ...req.body };
 
     try {
-      const usuarioAntigo = await Usuario.verificaUsuarioExiste(idUsuario);
+      const usuarioAntigo = await Usuario.verificaUsuarioExistePeloId(idUsuario);
       const usuario = Usuario.usuarioParaAtualizar(usuarioAntigo, camposUsuario);
 
       if (await UsuarioDAO.buscaUsuarioPeloEmail(usuario.email) && usuario.email !== usuarioAntigo.email) {
@@ -101,11 +102,11 @@ const UsuarioController = (app) => {
     }
   });
 
-  app.delete('/api/usuario/:id', async (req, res) => {
+  app.delete('/api/usuario/:id', AutenticacaoMiddleware.bearer, async (req, res) => {
     const idUsuario = parseInt(req.params.id);
 
     try {
-      await Usuario.verificaUsuarioExiste(idUsuario);
+      await Usuario.verificaUsuarioExistePeloId(idUsuario);
 
       await UsuarioDAO.deletaUsuario(idUsuario);
 

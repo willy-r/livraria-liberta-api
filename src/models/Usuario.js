@@ -4,11 +4,21 @@ const UsuarioDAO = require("../DAO/UsuarioDAO");
 const { EntityNotFoundError, InvalidArgumentError } = require("../erros/erros");
 
 class Usuario {
-  static async verificaUsuarioExiste(idUsuario) {
+  static async verificaUsuarioExistePeloId(idUsuario) {
     const usuario = await UsuarioDAO.buscaUsuarioPeloId(idUsuario);
 
     if (!usuario) {
       throw new EntityNotFoundError(`ERRO: usuário com ID ${idUsuario} não encontrado.`);
+    }
+
+    return usuario;
+  }
+
+  static async verificaUsuarioExistePeloEmail(email) {
+    const usuario = await UsuarioDAO.buscaUsuarioPeloEmail(email);
+
+    if (!usuario) {
+      throw new EntityNotFoundError(`ERRO: não existe usuário com este endereço de email.`);
     }
 
     return usuario;
@@ -28,6 +38,14 @@ class Usuario {
   static async criptografaSenha(senha) {
     const custoHash = 10;
     return bcrypt.hash(senha, custoHash);
+  }
+
+  static async verificaSenha(senha, senhaHash) {
+    const senhaValida = await bcrypt.compare(senha, senhaHash);
+    
+    if (!senhaValida) {
+      throw new InvalidArgumentError('Email ou senha inválidos.');
+    }
   }
 
   constructor(usuario) {
