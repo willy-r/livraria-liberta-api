@@ -57,7 +57,7 @@ npm run dev
 
 Para mais informações sobre cada rota em particular de cada entidade, por favor consulte a [wiki](https://github.com/willy-r/livraria-liberta-api/wiki) do projeto.
 
-### Rotas (Entidade Livro)
+### Rotas (Livro)
 
 | Método | Rota | Descrição |
 | ------ | ---- | --------- |
@@ -67,7 +67,7 @@ Para mais informações sobre cada rota em particular de cada entidade, por favo
 | **PATCH** | `/api/livro/{id}` | Atualiza livro pelo {id} |
 | **DELETE** | `/api/livro/{id}` | Deleta o livro pelo {id} |
 
-### Rotas (Entidade Usuário)
+### Rotas (Usuário)
 
 | Método | Rota | Descrição |
 | ------ | ---- | --------- |
@@ -81,7 +81,8 @@ Para mais informações sobre cada rota em particular de cada entidade, por favo
 
 | Método | Rota | Descrição |
 | ------ | ---- | --------- |
-| **POST** | `/api/auth/login` | Faz login do usuário |
+| **POST** | `/api/auth/login` | Efetua login do usuário |
+| **GET** | `/api/auth/logout` | Efetua logout do usuário |
 
 
 ## Informações gerais
@@ -102,9 +103,10 @@ Essas são algumas das bibliotecas e frameworks utilizadas no projeto.
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
 
-**Banco de Dados:**
+**Banco de Dados & Outros:**
 
 - [mysql](https://www.npmjs.com/package/mysql)
+- [redis](https://www.npmjs.com/package/redis)
 
 
 ## Autor
