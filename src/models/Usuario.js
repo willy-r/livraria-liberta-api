@@ -40,11 +40,11 @@ class Usuario {
     return bcrypt.hash(senha, custoHash);
   }
 
-  static async vefificaSenha(senha, senhaHash) {
+  static async verificaSenha(senha, senhaHash) {
     const senhaValida = await bcrypt.compare(senha, senhaHash);
     
     if (!senhaValida) {
-      throw new InvalidArgumentError('Email ou senha inválidos');
+      throw new InvalidArgumentError('Email ou senha inválidos.');
     }
   }
 
