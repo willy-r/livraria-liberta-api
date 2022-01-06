@@ -1,5 +1,6 @@
 const LivroDAO = require('../DAO/LivroDAO');
 const Livro = require('../models/Livro');
+const AutenticacaoMiddleware = require('../middlewares/AutenticacaoMiddleware');
 const { InvalidArgumentError } = require('../erros/erros');
 
 const LivroController = (app) => {
@@ -40,7 +41,7 @@ const LivroController = (app) => {
     }
   });
 
-  app.post('/api/livro', async (req, res) => {
+  app.post('/api/livro', AutenticacaoMiddleware.bearer, async (req, res) => {
     const camposLivro = { ...req.body };
 
     try {
@@ -64,7 +65,7 @@ const LivroController = (app) => {
     }
   });
 
-  app.patch('/api/livro/:id', async (req, res) => {
+  app.patch('/api/livro/:id', AutenticacaoMiddleware.bearer, async (req, res) => {
     const camposLivro = { ...req.body };
     const idLivro = parseInt(req.params.id);
 
@@ -90,7 +91,7 @@ const LivroController = (app) => {
     }
   });
 
-  app.delete('/api/livro/:id', async (req, res) => {
+  app.delete('/api/livro/:id', AutenticacaoMiddleware.bearer, async (req, res) => {
     const idLivro = parseInt(req.params.id);
 
     try {
