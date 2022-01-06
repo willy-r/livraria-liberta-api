@@ -1,5 +1,6 @@
 const UsuarioDAO = require('../DAO/UsuarioDAO');
 const Usuario = require('../models/Usuario');
+const AutenticacaoMiddleware = require('../middlewares/AutenticacaoMiddleware');
 const { InvalidArgumentError } = require('../erros/erros');
 
 const UsuarioController = (app) => {
@@ -67,7 +68,7 @@ const UsuarioController = (app) => {
     }
   });
 
-  app.patch('/api/usuario/:id', async (req, res) => {
+  app.patch('/api/usuario/:id', AutenticacaoMiddleware.bearer, async (req, res) => {
     const idUsuario = parseInt(req.params.id);
     const camposUsuario = { ...req.body };
 
@@ -101,7 +102,7 @@ const UsuarioController = (app) => {
     }
   });
 
-  app.delete('/api/usuario/:id', async (req, res) => {
+  app.delete('/api/usuario/:id', AutenticacaoMiddleware.bearer, async (req, res) => {
     const idUsuario = parseInt(req.params.id);
 
     try {

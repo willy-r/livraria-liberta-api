@@ -15,7 +15,7 @@ const local = (req, res, next) => {
 
       // Erros internos.
       if (err) {
-        return res.status(500).json({
+        return res.status(err.codStatus).json({
           erro: true,
           msg: err.message,
         });
@@ -56,7 +56,7 @@ const bearer = (req, res, next) => {
       }
 
       if (err) {
-        return res.status(500).json({
+        return res.status(err.codStatus).json({
           erro: true,
           msg: err.message,
         });
@@ -65,7 +65,7 @@ const bearer = (req, res, next) => {
       if (!usuario) {
         return res.status(401).json({
           erro: true,
-          msg: 'Erro ao tentar autenticar, email e senha requeridos.',
+          msg: 'Você precisa estar autenticado para isso.',
         });
       }
 
