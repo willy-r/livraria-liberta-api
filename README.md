@@ -77,6 +77,12 @@ Para mais informações sobre cada rota em particular de cada entidade, por favo
 | **PATCH** | `/api/usuario/{id}` | Atualiza usuário pelo {id} |
 | **DELETE** | `/api/usuario/{id}` | Deleta o usuário pelo {id} |
 
+### Rotas (Autenticação)
+
+| Método | Rota | Descrição |
+| ------ | ---- | --------- |
+| **POST** | `/api/auth/login` | Faz login do usuário |
+
 
 ## Informações gerais
 
