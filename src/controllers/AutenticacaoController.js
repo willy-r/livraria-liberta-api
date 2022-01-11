@@ -12,6 +12,7 @@ const AutenticacaoController = (app) => {
     // Com o token em mãos, seta o cabeçalho Authorization para verificação posterior.
     res.set('Authorization', token);
     res.status(200).json({
+      idUsuario: req.user.id_usuario,
       token: token,
     });
   });

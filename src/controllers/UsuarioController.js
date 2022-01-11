@@ -20,7 +20,7 @@ const UsuarioController = (app) => {
     }
   });
 
-  app.get('/api/usuario/:id', async (req, res) => {
+  app.get('/api/usuario/:id', AutenticacaoMiddleware.bearer, async (req, res) => {
     const idUsuario = parseInt(req.params.id);
 
     try {
