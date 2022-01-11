@@ -11,7 +11,9 @@ const AutenticacaoController = (app) => {
 
     // Com o token em mãos, seta o cabeçalho Authorization para verificação posterior.
     res.set('Authorization', token);
-    res.sendStatus(204);
+    res.status(200).json({
+      token: token,
+    });
   });
 
   app.get('/api/auth/logout', AutenticacaoMiddleware.bearer, async (req, res) => {
