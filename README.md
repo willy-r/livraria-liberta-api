@@ -4,7 +4,7 @@ Back-end da livraria Liberta, para o projeto do módulo 05 da @resilia-br, feito
 
 ## Livraria Liberta (Front-end)
 
-- TODO
+Você pode acessar o projeto do módulo 5 [aqui](https://livraria-liberta.vercel.app/).
 
 
 ## Variáveis de ambiente
