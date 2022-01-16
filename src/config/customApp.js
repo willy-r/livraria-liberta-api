@@ -8,7 +8,7 @@ require('../middlewares/estrategiasAutenticacao');
 const customApp = () => {
   const app = express();
   const opcoesCors = {
-    origin: ['/localhost/', '/livraria-liberta(-.+)?\.vercel\.app/'],
+    origin: [/localhost/, /livraria-liberta(-.+)?\.vercel\.app/],
   };
 
   // Middlewares.
