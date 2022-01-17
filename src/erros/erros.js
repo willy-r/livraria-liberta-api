@@ -22,8 +22,26 @@ class EntityNotFoundError extends Error {
   }
 }
 
+class InvalidTokenError extends Error {
+  constructor(mensagem) {
+    super(mensagem);
+    this.name = 'InvalidTokenError';
+    this.codStatus = 400;
+  }
+}
+
+class TokenExpiredError extends Error {
+  constructor(mensagem) {
+    super(mensagem);
+    this.name = 'TokenExpiredError';
+    this.codStatus = 400;
+  }
+}
+
 module.exports = {
   InvalidArgumentError,
   InternalServerError,
   EntityNotFoundError,
+  InvalidTokenError,
+  TokenExpiredError,
 };

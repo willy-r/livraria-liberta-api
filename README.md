@@ -19,9 +19,21 @@ As seguintes variáveis de ambiente precisam ser definidas para o funcionamento 
 - `DB_PASSWORD`
 - `DB_NAME`
 
+### Envio de email
+
+- `MAIL_HOST`
+- `MAIL_PORT`
+- `MAIL_USER`
+- `MAIL_PASSWORD`
+- `MAIL_FROM`
+
 ### Json Web Token
 
 - `JWT_KEY`
+
+### URL cliente
+
+- `CLIENT_URL`
 
 
 ## Rodar localmente
@@ -83,6 +95,8 @@ Para mais informações sobre cada rota em particular de cada entidade, por favo
 | ------ | ---- | --------- |
 | **POST** | `/api/auth/login` | Efetua login do usuário |
 | **GET** | `/api/auth/logout` | Efetua logout do usuário |
+| **POST** | `/api/auth/esqueceu-senha` | Efetua envio de email para usuário recuperar senha |
+| **POST** | `/api/auth/resetar-senha` | Efetua reset da senha |
 
 
 ## Informações gerais

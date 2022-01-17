@@ -26,7 +26,16 @@ const criaTabelaUsuario = `
   );
 `;
 
+const criaTabelaTokensResetarSenha = `
+  CREATE TABLE IF NOT EXISTS tokens_resetar_senha (
+    token VARCHAR(255) PRIMARY KEY NOT NULL,
+    expira_em DATETIME NOT NULL,
+    id_usuario INT NOT NULL
+  );
+`;
+
 module.exports = {
   criaTabelaLivro,
   criaTabelaUsuario,
+  criaTabelaTokensResetarSenha,
 };

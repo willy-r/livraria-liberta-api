@@ -35,7 +35,7 @@ class Usuario {
     });
   }
 
-  static async criptografaSenha(senha) {
+  static criptografaSenha(senha) {
     const custoHash = 10;
     return bcrypt.hash(senha, custoHash);
   }
@@ -132,7 +132,7 @@ class Usuario {
   }
 
   async adicionaSenhaCriptografada() {
-    this.senha = await Usuario.criptografaSenha(this.senha);;
+    this.senha = await Usuario.criptografaSenha(this.senha);
   }
 }
 
