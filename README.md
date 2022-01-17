@@ -96,6 +96,7 @@ Para mais informações sobre cada rota em particular de cada entidade, por favo
 | **POST** | `/api/auth/login` | Efetua login do usuário |
 | **GET** | `/api/auth/logout` | Efetua logout do usuário |
 | **POST** | `/api/auth/esqueceu-senha` | Efetua envio de email para usuário recuperar senha |
+| **POST** | `/api/auth/resetar-senha` | Efetua reset da senha |
 
 
 ## Informações gerais

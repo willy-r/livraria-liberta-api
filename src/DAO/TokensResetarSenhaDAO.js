@@ -2,6 +2,23 @@ const dbConexao = require('../infra/dbConexao');
 const { InternalServerError } = require('../erros/erros');
 
 class TokensResetarSenhaDAO {
+  static buscaToken(token) {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        SELECT * FROM tokens_resetar_senha
+        WHERE token = ?;
+      `;
+
+      dbConexao.query(sql, token, (err, results) => {
+        if (err) {
+          return reject(new InternalServerError(`ERRO: ${err.message}`));
+        }
+
+        resolve(results[0]);
+      });
+    });
+  }
+
   static adicionaToken(tokenInfo) {
     return new Promise((resolve, reject) => {
       const sql = `
@@ -19,6 +36,23 @@ class TokensResetarSenhaDAO {
         }
 
         resolve(params[0]);
+      });
+    });
+  }
+
+  static deletaTokensDoUsuario(idUsuario) {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        DELETE FROM tokens_resetar_senha
+        WHERE id_usuario = ?;
+      `;
+
+      dbConexao.query(sql, idUsuario, (err, results) => {
+        if (err) {
+          return reject(new InternalServerError(`ERRO: ${err.message}`));
+        }
+
+        resolve(results.affectedRows);
       });
     });
   }

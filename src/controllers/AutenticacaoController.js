@@ -1,11 +1,14 @@
-const { randomBytes } = require('crypto');
+const { randomBytes, createHash } = require('crypto');
 
 const jwt = require('jsonwebtoken');
 const dayjs = require('dayjs');
 
 const Usuario = require('../models/Usuario');
+const UsuarioDAO = require('../DAO/UsuarioDAO');
+const TokensResetarSenha = require('../models/TokensResetarSenha');
 const TokensResetarSenhaDAO = require('../DAO/TokensResetarSenhaDAO');
 const AutenticacaoMiddleware = require('../middlewares/AutenticacaoMiddleware');
+
 const { adicionaNaLista } = require('../redis/manipulaBlacklist');
 const mailer = require('../mailer/mailer');
 
@@ -44,11 +47,10 @@ const AutenticacaoController = (app) => {
       const usuario = await Usuario.verificaUsuarioExistePeloEmail(email);
       
       // Gera um token aleatório.
-
-      // @TODO gerar um hash desse token.
-      // Isso significa que um usuário vai poder ter vários tokens no banco de dados.
       const token = randomBytes(48).toString('hex');
-      const tokenHash = await Usuario.criaTokenHash(token);
+      // Gera um hash desse token.
+      // Isso significa que um usuário vai poder ter vários tokens no banco de dados.
+      const tokenHash = createHash('SHA256').update(token).digest('hex');
 
       // Cria data de expiração (máximo 1h a partir do momento de criação do token)
       const tokenExpiraEm = dayjs().add(1, 'h').format('YYYY-MM-DD HH:mm:ss');
@@ -80,7 +82,41 @@ const AutenticacaoController = (app) => {
         msg: 'O email foi enviado com sucesso!',
       });
     } catch (err) {
-      res.status(500).json({
+      res.status(err.codStatus).json({
+        erro: true,
+        msg: err.message,
+      });
+    }
+  });
+
+  app.post('/api/auth/resetar-senha', async (req, res) => {
+    const resetInfo = { ...req.body };
+    const tokenHash = createHash('SHA256').update(resetInfo.token).digest('hex');;
+
+    try {
+      // Verifica se o token existe.
+      const tokenInfo = await TokensResetarSenha.verificaTokenExiste(tokenHash);
+      const idUsuario = tokenInfo.id_usuario;
+
+      // Deleta todos os outros tokens do usuário.
+      await TokensResetarSenhaDAO.deletaTokensDoUsuario(idUsuario);
+      
+      TokensResetarSenha.verificaTokenExpirou(tokenInfo.expira_em);
+
+      // Faz a lógica para atualizar a senha do usuário.
+      const usuarioAntigo = await UsuarioDAO.buscaUsuarioPeloId(idUsuario);
+      const usuario = Usuario.usuarioParaAtualizar(usuarioAntigo, { senha: resetInfo.senha });
+      await usuario.adicionaSenhaCriptografada();
+
+      await UsuarioDAO.atualizaUsuario(usuario, idUsuario);
+
+      res.status(200).json({
+        erro: false,
+        msg: 'Senha atualizada com sucesso!',
+        idUsuario: idUsuario,
+      });
+    } catch (err) {
+      res.status(err.codStatus).json({
         erro: true,
         msg: err.message,
       });
