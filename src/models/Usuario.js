@@ -4,6 +4,8 @@ const UsuarioDAO = require("../DAO/UsuarioDAO");
 const { EntityNotFoundError, InvalidArgumentError } = require("../erros/erros");
 
 class Usuario {
+  static custoHash = 10;
+
   static async verificaUsuarioExistePeloId(idUsuario) {
     const usuario = await UsuarioDAO.buscaUsuarioPeloId(idUsuario);
 
@@ -35,9 +37,12 @@ class Usuario {
     });
   }
 
-  static async criptografaSenha(senha) {
-    const custoHash = 10;
-    return bcrypt.hash(senha, custoHash);
+  static criptografaSenha(senha) {
+    return bcrypt.hash(senha, Usuario.custoHash);
+  }
+
+  static criaTokenHash(token) {
+    return bcrypt.hash(token, Usuario.custoHash);
   }
 
   static async verificaSenha(senha, senhaHash) {
@@ -132,7 +137,7 @@ class Usuario {
   }
 
   async adicionaSenhaCriptografada() {
-    this.senha = await Usuario.criptografaSenha(this.senha);;
+    this.senha = await Usuario.criptografaSenha(this.senha);
   }
 }
 

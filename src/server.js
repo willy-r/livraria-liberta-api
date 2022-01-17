@@ -8,6 +8,6 @@ Tabelas.criaTabelas();
 
 // Cria o app e inicia o servidor.
 const app = customApp();
-const PORTA = process.env.PORT || 3000;
+const PORTA = process.env.PORT || 3003;
 
 app.listen(PORTA, () => console.log(`Server rodando na PORTA: ⚡${PORTA}`));
