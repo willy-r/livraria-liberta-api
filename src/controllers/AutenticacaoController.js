@@ -75,11 +75,11 @@ const AutenticacaoController = (app) => {
             msg: 'Erro ao enviar o email!',
           });
         }
-      });
 
-      res.status(200).json({
-        erro: false,
-        msg: 'O email foi enviado com sucesso!',
+        res.status(200).json({
+          erro: false,
+          msg: 'O email foi enviado com sucesso!',
+        });
       });
     } catch (err) {
       res.status(err.codStatus).json({
