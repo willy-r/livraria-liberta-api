@@ -63,9 +63,9 @@ const AutenticacaoController = (app) => {
       
       // Envia o email para o usuário.
       mailer.sendMail({
-        from: `"William Rodrigues - Livraria Liberta" <${process.env.MAIL_FROM}>`,
+        from: `"Livraria Liberta" <${process.env.MAIL_FROM}>`,
         to: email,
-        subject: 'Recuperação de senha para sua conta da Liberta',
+        subject: 'Recuperação de senha para sua conta na Liberta',
         template: 'esqueceu-senha',
         context: { link: `${process.env.CLIENT_URL}/resetar-senha?token=${token}` },
       }, (err) => {
@@ -91,7 +91,7 @@ const AutenticacaoController = (app) => {
 
   app.post('/api/auth/resetar-senha', async (req, res) => {
     const resetInfo = { ...req.body };
-    const tokenHash = createHash('SHA256').update(resetInfo.token).digest('hex');;
+    const tokenHash = createHash('SHA256').update(resetInfo.token).digest('hex');
 
     try {
       // Verifica se o token existe.
@@ -112,7 +112,7 @@ const AutenticacaoController = (app) => {
 
       res.status(200).json({
         erro: false,
-        msg: 'Senha atualizada com sucesso!',
+        msg: 'Senha atulizada com sucesso!',
         idUsuario: idUsuario,
       });
     } catch (err) {
