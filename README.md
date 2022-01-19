@@ -110,17 +110,20 @@ Essas são algumas das bibliotecas e frameworks utilizadas no projeto.
 **Servidor:**
 
 - [NodeJS](https://nodejs.org/en/)
-- [Express](http://expressjs.com/)]
+- [Express](http://expressjs.com/)
 
 **Autenticação & Segurança:**
 
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [passport](https://www.npmjs.com/package/passport)
 
 **Banco de Dados & Outros:**
 
 - [mysql](https://www.npmjs.com/package/mysql)
 - [redis](https://www.npmjs.com/package/redis)
+- [nodemailer](https://www.npmjs.com/package/nodemailer)
+- [dayjs](https://www.npmjs.com/package/dayjs)
 
 
 ## Autor
